@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  joomla:
+    image: joomla
+    restart: always
+    depends_on:
+      - webos
+    ports:
+      - 8081:80
+    environment:
+      JOOMLA_DB_HOST: webos
+      JOOMLA_DB_USER: divyaansh
+      JOOMLA_DB_PASSWORD: redhat
+      JOOMLA_DB_NAME: database
+    volumes:
+            - joomla_storage:/var/www/html
+
+
+  webos:
+    image: mysql:5.7
+    restart: always
+    environment:
+            MYSQL_ROOT_PASSWORD: redhat1234
+            MYSQL_USER: divyaansh
+            MYSQL_PASSWORD: redhat
+            MYSQL_DATABASE: database
+    volumes:
+            - database_storage:/var/lib/mysql/
+
+volumes:
+        database_storage:
+        joomla_storage:
